@@ -45,7 +45,7 @@ function clearCalculator() {
 
 // Function to handle number button click
 
-
+// Function to handle number button click
 function handleNumberButtonClick(number) {
   if (operator === '') {
     firstNumber += number;
@@ -55,26 +55,24 @@ function handleNumberButtonClick(number) {
     updateDisplay(secondNumber);
   }
 }
-  
 
 // Function to handle decimal button click
 function handleDecimalButtonClick() {
-    if (operator === '') {
-      if (!isFirstNumberDecimal && !firstNumber.includes('.')) {
-        firstNumber += '.';
-        updateDisplay(firstNumber);
-        isFirstNumberDecimal = true;
-      }
-    } else {
-      if (!isSecondNumberDecimal && !secondNumber.includes('.')) {
-        secondNumber += '.';
-        updateDisplay(secondNumber);
-        isSecondNumberDecimal = true;
-      }
+  if (operator === '') {
+    if (!isFirstNumberDecimal && !firstNumber.includes('.')) {
+      firstNumber += '.';
+      updateDisplay(firstNumber);
+      isFirstNumberDecimal = true;
+    }
+  } else {
+    if (!isSecondNumberDecimal && !secondNumber.includes('.')) {
+      secondNumber += '.';
+      updateDisplay(secondNumber);
+      isSecondNumberDecimal = true;
     }
   }
-    
-// Function to handle operator button click
+}
+
 // Function to handle operator button click
 function handleOperatorButtonClick(op) {
   if (firstNumber !== '' && secondNumber !== '') {
@@ -83,71 +81,82 @@ function handleOperatorButtonClick(op) {
 
   operator = op;
 }
-  // Function to calculate the result
-  function calculate() {
-    const num1 = parseFloat(firstNumber);
-    const num2 = parseFloat(secondNumber);
-  
-    switch (operator) {
-      case '+':
-        result = num1 + num2;
-        break;
-      case '-':
-        result = num1 - num2;
-        break;
-      case '*':
-        result = num1 * num2;
-        break;
-      case '÷':
-        if (num2 === 0) {
-          updateDisplay('Error: Division by 0');
-          return;
-        }
-        result = num1 / num2;
-        break;
-      default:
+
+// Function to calculate the result
+function calculate() {
+  const num1 = parseFloat(firstNumber);
+  const num2 = parseFloat(secondNumber);
+
+  switch (operator) {
+    case '+':
+      result = num1 + num2;
+      break;
+    case '-':
+      result = num1 - num2;
+      break;
+    case '*':
+      result = num1 * num2;
+      break;
+    case '÷':
+      if (num2 === 0) {
+        updateDisplay('Error: Division by 0');
         return;
-    }
-  
-    // Round the result to avoid long decimals
-    result = Math.round(result * 100) / 100;
-    console.log(result)
+      }
+      result = num1 / num2;
+      break;
+    default:
+      return;
   }
-  
-  // Function to handle equals button click
-  function handleEqualsButtonClick() {
-    if (firstNumber !== '' && operator !== '' && secondNumber !== '') {
-      calculate();
-      updateDisplay('result');
-  
-      // Reset decimal flags
-      isFirstNumberDecimal = false;
-      isSecondNumberDecimal = false;
-    }
+
+  // Round the result to avoid long decimals
+  result = Math.round(result * 100) / 100;
+  console.log(result)
+}
+
+// Function to handle equals button click
+function handleEqualsButtonClick() {
+  if (firstNumber !== '' && operator !== '' && secondNumber !== '') {
+    calculate();
+    updateDisplay('result');
+
+    // Reset decimal flags
+    isFirstNumberDecimal = false;
+    isSecondNumberDecimal = false;
   }
-  
-  
-  
+}
+
+// Add event listeners to buttons
+clearButton.addEventListener('click', clearCalculator);
+
   
   // Add event listeners to buttons
-  clearButton.addEventListener('click', clearCalculator);
-  
-  numberButtons.forEach(button => {
-    button.addEventListener('click', handleNumberButtonClick);
+// Add event listeners to buttons
+// Add event listeners to buttons
+numberButtons.forEach(button => {
+  button.addEventListener('click', function(event) {
+    event.stopPropagation();
+    handleNumberButtonClick(event.target.innerText);
   });
-  
-  operatorButtons.forEach(button => {
-    button.addEventListener('click', handleOperatorButtonClick);
+});
+
+operatorButtons.forEach(button => {
+  button.addEventListener('click', function(event) {
+    event.stopPropagation();
+    handleOperatorButtonClick(event.target.innerText);
   });
-  
-  decimalButton.addEventListener('click', handleDecimalButtonClick);
-  
-  equalsButton.addEventListener('click', handleEqualsButtonClick);
+});
+
+// Add event listeners for keyboard entry
+decimalButton.addEventListener('click', handleDecimalButtonClick);
+
+equalsButton.addEventListener('click', handleEqualsButtonClick);
 
   // Add event listeners for keyboard entry
 // Function to handle number button click
 
 
+// Add event listeners for keyboard entry
+// Add event listeners for keyboard entry
 // Add event listeners for keyboard entry
 window.addEventListener('keydown', (event) => {
   const key = event.key;
@@ -167,18 +176,7 @@ window.addEventListener('keydown', (event) => {
   }
 });
 
-// Add event listeners to buttons
-numberButtons.forEach(button => {
-  button.addEventListener('click', function() {
-    handleNumberButtonClick(this.textContent);
-  });
-});
 
-operatorButtons.forEach(button => {
-  button.addEventListener('click', function() {
-    handleOperatorButtonClick(this.textContent);
-  });
-});
 
 
 // Function to handle number button click
