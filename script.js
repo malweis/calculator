@@ -44,9 +44,9 @@ function clearCalculator() {
 }
 
 // Function to handle number button click
-function handleNumberButtonClick() {
-  const number = this.textContent;
 
+
+function handleNumberButtonClick(number) {
   if (operator === '') {
     firstNumber += number;
     updateDisplay(firstNumber);
@@ -55,10 +55,6 @@ function handleNumberButtonClick() {
     updateDisplay(secondNumber);
   }
 }
-
-// Function to handle operator button click
-// Function to handle operator button click
-
   
 
 // Function to handle decimal button click
@@ -79,14 +75,14 @@ function handleDecimalButtonClick() {
   }
     
 // Function to handle operator button click
-function handleOperatorButtonClick() {
-    if (firstNumber !== '' && secondNumber !== '') {
-      calculate();
-    }
-  
-    operator = this.textContent;
+// Function to handle operator button click
+function handleOperatorButtonClick(op) {
+  if (firstNumber !== '' && secondNumber !== '') {
+    calculate();
   }
-  
+
+  operator = op;
+}
   // Function to calculate the result
   function calculate() {
     const num1 = parseFloat(firstNumber);
@@ -147,3 +143,42 @@ function handleOperatorButtonClick() {
   decimalButton.addEventListener('click', handleDecimalButtonClick);
   
   equalsButton.addEventListener('click', handleEqualsButtonClick);
+
+  // Add event listeners for keyboard entry
+// Function to handle number button click
+
+
+// Add event listeners for keyboard entry
+window.addEventListener('keydown', (event) => {
+  const key = event.key;
+  const numberKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  const operatorKeys = ['+', '-', '*', '/'];
+  const equalsKey = 'Enter';
+  const decimalKey = '.';
+
+  if (numberKeys.includes(key)) {
+    handleNumberButtonClick(key);
+  } else if (operatorKeys.includes(key)) {
+    handleOperatorButtonClick(key);
+  } else if (key === equalsKey || key === '=') {
+    handleEqualsButtonClick();
+  } else if (key === decimalKey) {
+    handleDecimalButtonClick();
+  }
+});
+
+// Add event listeners to buttons
+numberButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    handleNumberButtonClick(this.textContent);
+  });
+});
+
+operatorButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    handleOperatorButtonClick(this.textContent);
+  });
+});
+
+
+// Function to handle number button click
